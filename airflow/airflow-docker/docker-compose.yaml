@@ -1,23 +1,3 @@
-#!/bin/bash
-
-# Step 1: Prompt for user input
-read -p "Enter your desired Airflow username: " username
-read -p "Enter your first name: " firstname
-read -p "Enter your last name: " lastname
-read -p "Enter your email address: " email
-read -sp "Enter your desired password: " password
-echo
-
-# Step 2: Set up the directory structure and files
-echo "Setting up Airflow with Docker..."
-mkdir airflow-docker
-cd airflow-docker || exit
-
-echo "Creating necessary directories..."
-mkdir dags logs plugins
-
-echo "Writing docker-compose.yaml file..."
-cat <<EOL > docker-compose.yaml
 version: '3'
 services:
   postgres:
@@ -103,29 +83,3 @@ services:
     depends_on:
       - postgres
       - redis
-EOL
-
-# Step 3: Pull and initialize the Docker containers
-echo "Initializing the Airflow database..."
-docker-compose up airflow-init
-
-# Step 4: Create the admin user
-echo "Creating Airflow admin user..."
-docker-compose run airflow-webserver airflow users create \
-    --username "$username" \
-    --firstname "$firstname" \
-    --lastname "$lastname" \
-    --role Admin \
-    --email "$email" \
-    --password "$password"
-
-# Step 5: Start the Airflow services
-echo "Starting the Airflow services..."
-docker-compose up -d
-
-# Step 6: Provide the launch URL
-echo
-echo "================================================="
-echo "Airflow setup complete! You can access it here:"
-echo "http://localhost:8080"
-echo "================================================="
