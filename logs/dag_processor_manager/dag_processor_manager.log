@@ -4390,6 +4390,7 @@ File Path                          PID    Runtime      # DAGs    # Errors  Last 
 /opt/airflow/dags/test-airflow.py                           1           0  0.27s           2024-10-25T20:32:34
 /opt/airflow/dags/temp-airflow.py                           1           0  2.44s           2024-10-25T20:32:40
 ================================================================================
+<<<<<<< HEAD
 [2024-10-25T20:33:19.939+0000] {manager.py:854} INFO - 
 ================================================================================
 DAG File Processing Stats
@@ -4841,3 +4842,5 @@ File Path                          PID    Runtime      # DAGs    # Errors  Last 
 /opt/airflow/dags/test-airflow.py                           1           0  0.29s           2024-10-25T20:57:37
 /opt/airflow/dags/temp-airflow.py                           1           0  1.30s           2024-10-25T20:57:29
 ================================================================================
+=======
+>>>>>>> d4c97d5 (modified airflow setup, add files to add code for azure, working dag flow that scrapes & preprocesses the text & stores it)
