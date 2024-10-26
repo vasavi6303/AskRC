@@ -1,0 +1,5 @@
+# Ignore all logs
+logs/
+src/data_pipeline/__pycache__
+dags/__pycache__/
+askrc/
