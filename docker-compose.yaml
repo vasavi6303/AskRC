@@ -61,6 +61,14 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session'
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- pandas nltk requests beautifulsoup4 }
+    # SMTP Settings
+    AIRFLOW__SMTP__SMTP_HOST: smtp.gmail.com
+    AIRFLOW__SMTP__SMTP_STARTTLS: 'True'
+    AIRFLOW__SMTP__SMTP_SSL: 'False'
+    AIRFLOW__SMTP__SMTP_USER: santhoshsanz29@gmail.com
+    AIRFLOW__SMTP__SMTP_PORT: 587
+    AIRFLOW__SMTP__SMTP_PASSWORD: tdqd ymea iszb zqfc
+    AIRFLOW__SMTP__SMTP_MAIL_FROM: santhoshsanz29@gmail.com
   volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/src:/opt/airflow/src
@@ -234,6 +242,14 @@ services:
         mkdir -p /sources/logs /sources/dags /sources/plugins
         chown -R "${AIRFLOW_UID}:0" /sources/{logs,dags,plugins}
         exec /entrypoint airflow version
+        
+        airflow users create \
+          --username santosh1 \
+          --password santosh1 \
+          --firstname santosh1 \
+          --lastname majji \
+          --role Admin \
+          --email majji.s@northeastern.edu
     # yamllint enable rule:line-length
     environment:
       <<: *airflow-common-env
