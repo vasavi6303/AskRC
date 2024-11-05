@@ -1,0 +1,11 @@
+https://rc-docs.northeastern.edu/en/latest/connectingtocluster/index.html#
+https://rc-docs.northeastern.edu/en/latest/runningjobs/index.html
+https://rc-docs.northeastern.edu/en/latest/datamanagement/index.html
+https://rc-docs.northeastern.edu/en/latest/gpus/index.html
+https://rc-docs.northeastern.edu/en/latest/software/index.html
+https://rc-docs.northeastern.edu/en/latest/slurmguide/index.html
+https://rc-docs.northeastern.edu/en/latest/classroom/index.html
+https://rc-docs.northeastern.edu/en/latest/containers/index.html
+https://rc-docs.northeastern.edu/en/latest/best-practices/index.html
+https://rc-docs.northeastern.edu/en/latest/glossary.html
+https://rc-docs.northeastern.edu/en/latest/faqs-new.html

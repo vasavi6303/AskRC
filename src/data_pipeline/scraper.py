@@ -9,21 +9,25 @@ for scraping sections based on the current week and ensuring that a new section 
 from .get_all_url import fetch_and_print_links
 from .arrange import arrange_scraped_data
 from .utils import get_current_week
+import os
+
 
 # Define the URLs for each section to scrape
-section_urls = {
-    'section-1': ["https://rc-docs.northeastern.edu/en/latest/connectingtocluster/index.html#"],
-    'section-2': ["https://rc-docs.northeastern.edu/en/latest/runningjobs/index.html"],
-    'section-3': ["https://rc-docs.northeastern.edu/en/latest/gpus/index.html"],
-    'section-4': ["https://rc-docs.northeastern.edu/en/latest/datamanagement/index.html"],
-    'section-5': ["https://rc-docs.northeastern.edu/en/latest/software/index.html"],
-    'section-6': ["https://rc-docs.northeastern.edu/en/latest/slurmguide/index.html"],
-    'section-7': ["https://rc-docs.northeastern.edu/en/latest/classroom/index.html"],
-    'section-8': ["https://rc-docs.northeastern.edu/en/latest/containers/index.html"],
-    'section-9': ["https://rc-docs.northeastern.edu/en/latest/best-practices/index.html"],
-    'section-10': ["https://rc-docs.northeastern.edu/en/latest/glossary.html"],
-    'section-11': ["https://rc-docs.northeastern.edu/en/latest/faqs-new.html"]
-}
+section_urls = {}
+
+def read_urls_from_file():
+    urls = []
+    cur_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(cur_dir, "baseURLs.txt")
+    with open(file_path, "r" ) as file:
+        urls = [line.rstrip() for line in file]
+    return urls
+
+def update_section_urls():
+    urls = read_urls_from_file()
+    for index, url in enumerate(urls):
+        section_urls["section-" + str(index + 1)] = [url]
+
 
 def scrape_sections_up_to_current_week():
     """
@@ -37,6 +41,7 @@ def scrape_sections_up_to_current_week():
         dict: A dictionary of the sections that were scraped in the current run.
     """
     print("Starting the scraping process...")  # Indicate the start of the scraping process
+    update_section_urls()
     current_week = get_current_week()  # Calculate the current week based on the start date
     
     # Ensure the current week does not exceed the number of available sections (11)
