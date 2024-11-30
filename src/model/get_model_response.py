@@ -13,12 +13,12 @@ def get_openai_response(prompt, retries=3, delay=5):
             
             # OpenAI ChatCompletion request
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",  # Using gpt-3.5-turbo as per the updated requirement
+                model="gpt-4-turbo",  # Using gpt-4-turbo as per the updated requirement
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant."},
                     {"role": "user", "content": prompt}
                 ],
-                max_tokens=512
+                max_tokens=1024,
             )
             return response['choices'][0]['message']['content'].strip()
         

@@ -57,8 +57,8 @@ def main():
                     else:
                         st.success("Answer provided.")
                 else:
-                    st.warning("The answer lacks sufficient contextual relevance.")
-                    send_slack_alert("Answer lacks context", f"The answer provided lacks sufficient contextual relevance: {answer_clean}")
+                    st.warning("The question lacks sufficient contextual relevance.")
+                    send_slack_alert("Question lacks context", f"The question provided lacks sufficient contextual relevance: {answer_clean}")
 
 # Run the app
 if __name__ == "__main__":
