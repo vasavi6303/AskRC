@@ -31,16 +31,6 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Install dotenv-cli to load .env
-        run: |
-          source venv/bin/activate
-          pip install dotenv-cli
-
-      - name: Load .env variables
-        run: |
-          source venv/bin/activate
-          dotenv -f .env run echo "Environment variables loaded"
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
