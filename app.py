@@ -17,44 +17,6 @@ from src.model.alerts import send_slack_alert
 # Load environment variables from .env file
 load_dotenv()
 
-# Trigger Airflow DAG function
-def trigger_airflow_dag(user_question):
-    """
-    Trigger Airflow DAG using the Airflow CLI.
-    """
-    dag_id = "response_generation_pipeline"  # Replace with your DAG ID if different
-    conf = f"{{'user_question': '{user_question}'}}"  # Pass the user question as conf
-    command = f"airflow dags trigger {dag_id} -c '{conf}'"  # CLI command to trigger the DAG
-    exit_code = os.system(command)  # Execute the command
-    if exit_code == 0:
-        st.success("DAG triggered successfully!")
-    else:
-        st.error("Failed to trigger DAG. Check Airflow logs for details.")
-
-# Email alert function (you can integrate any email provider like SendGrid or use SMTP)
-def send_email_alert(subject, body):
-    sender_email = os.getenv("SENDER_EMAIL")  # Sender's email
-    receiver_emails = os.getenv("EMAIL_TO").split(',')  # List of recipient emails
-    app_password = os.getenv("EMAIL_APP_PASSWORD")  # App Password or regular password
-    smtp_server = os.getenv("SMTP_SERVER")  # SMTP server from .env
-    smtp_port = int(os.getenv("SMTP_PORT"))  # SMTP port from .env
-
-    # Set up the MIME
-    msg = MIMEText(body, 'plain')
-    msg['From'] = sender_email
-    msg['To'] = ', '.join(receiver_emails)
-    msg['Subject'] = subject
-
-    try:
-        # Connect to the SMTP server with the configured server and port
-        with smtplib.SMTP_SSL(smtp_server, smtp_port) if smtp_port == 465 else smtplib.SMTP(smtp_server, smtp_port) as server:
-            if smtp_port == 587:
-                server.starttls()
-            server.login(sender_email, app_password)
-            server.sendmail(sender_email, receiver_emails, msg.as_string())
-            print("Alert email sent successfully.")
-    except Exception as e:
-        print(f"Error sending email alert: {e}")
 
 def main():
     st.set_page_config(page_title="AskRC", page_icon="🎓")
@@ -72,7 +34,7 @@ def main():
             if bias_message:
                 # Display rephrase suggestion if bias is detected
                 st.warning(bias_message)
-                send_email_alert("Bias detected in user question", f"The user question contains bias: {user_question_clean}. Bias message: {bias_message}")
+                #send_email_alert("Bias detected in user question", f"The user question contains bias: {user_question_clean}. Bias message: {bias_message}")
             else:
                 # Step 2: Retrieve context from Azure Search
                 context = search_azure_index(user_question_clean)
