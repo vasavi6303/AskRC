@@ -67,3 +67,4 @@ if __name__ == "__main__":
     main()
     collector.log_all()
 
+#mlflow server --host 127.0.0.1 --port 8080
