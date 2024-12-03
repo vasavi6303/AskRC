@@ -47,6 +47,7 @@ def check_bias_in_user_question(question):
     """
     # Replace gendered terms with neutral equivalents
     modified_question = question
+    #collector.add_metric('Question',modified_question)
     for gendered_term, neutral_term in gender_neutral_map.items():
         modified_question = re.sub(rf"\b{re.escape(gendered_term)}\b", neutral_term, modified_question, flags=re.IGNORECASE)
 

@@ -24,7 +24,7 @@ def main():
     st.header("AskRC 🎓")
 
     user_question = st.text_input("Ask a Question")
-    collector.add_metric('Question',user_question)
+    
 
     if st.button("Get Answer"):
         with st.spinner("Processing..."):
