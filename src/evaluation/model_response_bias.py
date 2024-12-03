@@ -5,7 +5,8 @@ import nltk
 import spacy
 from nltk.sentiment import SentimentIntensityAnalyzer
 from dotenv import load_dotenv
-
+from ..config.mlflow_config import *
+collector = MetricsCollector()
 # Load environment variables
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -73,7 +74,8 @@ def check_bias_in_model_response(response):
 
     # Check sentiment score of the entire response
     sentiment_score = sia.polarity_scores(modified_response)
-    
+    #collector.add_metric('sentiment_score',sentiment_score)
+    #collector.add_metric('sentiment_score_threshold',0.95)
     # Flag the response if the negative sentiment is exceptionally high (>0.95)
     if sentiment_score["neg"] > 0.95:
         return None, "The response was flagged for high negative sentiment, which may impact the quality of the information provided."

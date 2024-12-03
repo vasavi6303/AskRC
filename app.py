@@ -6,7 +6,7 @@ import streamlit as st
 from azure.search.documents import SearchClient
 from azure.core.credentials import AzureKeyCredential
 from dotenv import load_dotenv
-
+from src.config.mlflow_config import MetricsCollector
 from src.model.retrive_azure_index import search_azure_index
 from src.model.system_prompt import create_system_prompt
 from src.model.get_model_response import get_openai_response
@@ -16,6 +16,7 @@ from src.evaluation.answer_validation import key_concept_match
 from src.model.alerts import send_slack_alert
 # Load environment variables from .env file
 load_dotenv()
+collector = MetricsCollector()
 
 
 def main():
@@ -23,6 +24,7 @@ def main():
     st.header("AskRC 🎓")
 
     user_question = st.text_input("Ask a Question")
+    collector.add_metric('Question',user_question)
 
     if st.button("Get Answer"):
         with st.spinner("Processing..."):
@@ -63,3 +65,5 @@ def main():
 # Run the app
 if __name__ == "__main__":
     main()
+    collector.log_all()
+

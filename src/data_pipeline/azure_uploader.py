@@ -6,6 +6,9 @@ It provides a function to upload files to a specified container in Azure Blob St
 """
 import os
 from dotenv import load_dotenv
+import datetime
+from ..config.mlflow_config import *
+collector = MetricsCollector()
 
 load_dotenv()
 
@@ -38,6 +41,9 @@ def upload_to_blob(file_path, file_name):
     Args:
         file_path (str): The path of the file to upload.
     """
+    
+    blob_version = datetime.datetime.now().strftime("%d%m%yT%H%M%S")
+    collector.add_metric('blob_version',blob_version)
     container_client = getContainerClient(container_name)
     # Open the file and read its content
     try:

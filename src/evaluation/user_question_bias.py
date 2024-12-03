@@ -1,6 +1,9 @@
 import re
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
+from ..config.mlflow_config import *
+collector = MetricsCollector()
+
 
 # Download required NLTK resources if not already available
 try:
@@ -55,6 +58,10 @@ def check_bias_in_user_question(question):
             continue
         # Perform sentiment analysis; flag if negativity is very high
         sentiment_score = sia.polarity_scores(word)
+        collector.add_metric('question_sentiment_score',sentiment_score["neg"])
+        #print('question_sentiment_score',sentiment_score["neg"])
+        collector.add_metric('question_sentiment_score_threshold',0.95)
+
         if sentiment_score["neg"] > 0.95:
             # Return a rephrase suggestion if inappropriate content is detected
             return None, "We detected some language that might impact the quality of the response. Please consider rephrasing."
