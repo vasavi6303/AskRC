@@ -5,6 +5,9 @@ import uuid
 import nltk
 from nltk.corpus import stopwords
 from datetime import datetime
+import logging
+from schema_drift_detection import detect_schema_drift
+from schema_drift_detection import log_schema_drift
 
 try:
     from .azure_uploader import upload_to_blob
@@ -18,6 +21,10 @@ nltk.download('stopwords', quiet=True)
 
 # Define maximum term size (in bytes)
 MAX_TERM_SIZE = 20000
+
+# Save the reference schema to a JSON file
+with open("reference_schema.json", "w") as file:
+    json.dump(reference_schema, file, indent=4)
 
 def clean_text(text):
     """
@@ -113,11 +120,17 @@ def preprocess_text_file(input_file_path, output_folder):
                 "id": f"{base_id}_{i}",  # Unique ID for each split part
                 "content": part
             }
+
+            schema_drift_detected = detect_schema_drift(document, reference_schema_path)
+
             output_file_path = os.path.join(output_folder, f"{base_id}_{i}.json")
             os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
             with open(output_file_path, 'w', encoding='utf-8') as file:
                 json.dump(document, file, ensure_ascii=False, indent=4)
             print(f"Processed text saved to {output_file_path}")
+
+            if schema_drift_detected:
+                print(f"Schema drift handled for document: {output_file_path}")
  
     except Exception as e:
         print(f"Error during preprocessing file {input_file_path}: {str(e)}")
