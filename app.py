@@ -24,7 +24,6 @@ def main():
     st.header("AskRC 🎓")
 
     user_question = st.text_input("Ask a Question")
-    
 
     if st.button("Get Answer"):
         with st.spinner("Processing..."):
