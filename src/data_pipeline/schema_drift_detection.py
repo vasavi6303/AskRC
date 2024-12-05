@@ -20,6 +20,10 @@ reference_schema = {
     # Add other known fields if applicable
 }
 
+# Save the reference schema to a JSON file
+with open("reference_schema.json", "w") as file:
+    json.dump(reference_schema, file, indent=4)
+
 
 def detect_schema_drift(new_document, reference_schema_path="reference_schema.json"):
     """

@@ -22,10 +22,6 @@ nltk.download('stopwords', quiet=True)
 # Define maximum term size (in bytes)
 MAX_TERM_SIZE = 20000
 
-# Save the reference schema to a JSON file
-with open("reference_schema.json", "w") as file:
-    json.dump(reference_schema, file, indent=4)
-
 def clean_text(text):
     """
     Clean and preprocess the text. Includes:
