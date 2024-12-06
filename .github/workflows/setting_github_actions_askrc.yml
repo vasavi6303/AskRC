@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - preprod
   pull_request:
     branches:
       - main
+      - preprod
   workflow_dispatch:
 
 jobs:
@@ -30,6 +32,15 @@ jobs:
         run: |
           source venv/bin/activate
           pip install -r requirements.txt
+
+      - name: Archive files for deployment
+        run: zip -r release.zip .
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-app
+          path: release.zip
 
   deploy:
     runs-on: ubuntu-latest
