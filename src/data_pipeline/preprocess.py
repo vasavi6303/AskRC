@@ -16,7 +16,10 @@ except (ImportError, ValueError):
         return f"mock_url_for_{file_path}"
 
 # Download stopwords if not already done
-nltk.download('stopwords', quiet=True)
+try:
+    nltk.data.find('stopwords')
+except LookupError:
+    nltk.download('stopwords', quiet=True)
 
 # Define maximum term size (in bytes)
 MAX_TERM_SIZE = 20000
@@ -119,6 +122,7 @@ def preprocess_text_file(input_file_path, output_folder):
             schema_drift_detected = detect_schema_drift(document, reference_schema_path)
 
             output_file_path = os.path.join(output_folder, f"{base_id}_{i}.json")
+            print("output file path:" + output_file_path)
             os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
             with open(output_file_path, 'w', encoding='utf-8') as file:
                 json.dump(document, file, ensure_ascii=False, indent=4)
