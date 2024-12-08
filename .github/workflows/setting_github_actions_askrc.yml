@@ -74,7 +74,7 @@ jobs:
         with:
           app-name: 'askrc'
           slot-name: 'Production'
-          resource-group-name: 'RAGChatbot'
+          resource-group-name: 'ragchatbot'
 
       - name: Notify Slack on Failure
         if: failure()
