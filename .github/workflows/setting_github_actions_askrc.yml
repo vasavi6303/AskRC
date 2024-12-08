@@ -50,6 +50,7 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
@@ -73,6 +74,7 @@ jobs:
         with:
           app-name: 'askrc'
           slot-name: 'Production'
+          resource-group-name: 'ragchatbot'
 
       - name: Notify Slack on Failure
         if: failure()
