@@ -29,6 +29,12 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
+      
+      - name: Download required NLTK resources
+        run: |
+          python -m nltk.downloader vader_lexicon
+          python -m nltk.downloader punkt
+          python -m nltk.downloader opinion_lexicon
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
@@ -62,7 +68,7 @@ jobs:
         run: unzip release.zip
 
       - name: Add delay before deployment
-        run: sleep 15m   
+        run: sleep 10m   
        
       - name: Login to Azure
         uses: azure/login@v2
