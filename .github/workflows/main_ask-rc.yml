@@ -61,7 +61,9 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
+      - name: Add delay before deployment
+        run: sleep 15m   
+       
       - name: Login to Azure
         uses: azure/login@v2
         with:
