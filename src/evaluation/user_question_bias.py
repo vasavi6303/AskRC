@@ -3,6 +3,9 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 from ..config.mlflow_config import *
 
+# Ensure the data path is correctly set
+nltk.data.path.append("/home/runner/nltk_data")
+
 collector = MetricsCollector()
 
 
